@@ -25,6 +25,7 @@ def generate_stats(org_name, start_date=None, repo_name=None, pull_id=None, slee
                 stats[str(comment.user)]['comments'] += 1
             if sleep:
                 time.sleep(sleep)
+            write_file()  # in case the process terminates (throttle)
     return stats
 
 
@@ -37,6 +38,14 @@ def parse_options():
     parser.add_argument('--sleep', type=int, help='Sleep time in seconds to avoid rate limiting')
     args = parser.parse_args()
     return args
+
+
+def write_file():
+    with open(_RESULTS_FILE, 'w') as fd:
+        fd.write('username,pull requests,pull request comments\n')
+        for username, counts in stats.items():
+            fd.write('%s,%s,%s' % (username, counts['author'], counts['comments']))
+            fd.write('\n')
 
 
 def _get_repositories(org, repo_name=None):
@@ -66,8 +75,4 @@ if __name__ == '__main__':
         sleep=options.sleep,
     )
     print 'Writing to %s' % _RESULTS_FILE
-    with open(_RESULTS_FILE, 'w') as fd:
-        fd.write('username,pull requests,pull request comments\n')
-        for username, counts in stats.items():
-            fd.write('%s,%s,%s' % (username, counts['author'], counts['comments']))
-            fd.write('\n')
+    write_file()

@@ -1,0 +1,10 @@
+what other stats to pull? lines of code added/deleted
+length of comments
+their PRs merged w/o code review (no comments)
+hours spread of written code
+hours spread of comments
+how could we map people to teams?
+full names in output
+
+error handling:
+requests.exceptions.ConnectionError (timeout)
