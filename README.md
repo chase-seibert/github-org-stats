@@ -12,3 +12,14 @@ pip install -r requirements.txt
 python login.py
 python comments.py NerdWallet --start 2017-07-01
 ```
+
+Example output:
+
+```bash
+username,pull requests,pull request comments
+user1,119,968
+user2,48,316
+user3,123,304
+user4,92,244
+...
+```
